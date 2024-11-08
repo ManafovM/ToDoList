@@ -12,6 +12,12 @@ class ToDoTableViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        if let savedToDos = ToDo.loadToDos() {
+            toDos = savedToDos
+        } else {
+            toDos = ToDo.loadSampleToDos()
+        }
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
