@@ -45,7 +45,7 @@
         <!--New To-Do-->
         <scene sceneID="SpM-EC-CJp">
             <objects>
-                <tableViewController id="50w-8E-6SC" sceneMemberID="viewController">
+                <tableViewController id="50w-8E-6SC" customClass="ToDoDetailTableViewController" customModule="ToDoList" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="grouped" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="18" estimatedSectionHeaderHeight="-1" sectionFooterHeight="18" estimatedSectionFooterHeight="-1" id="aVE-5R-SJi">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -64,6 +64,9 @@
                                                     <rect key="frame" x="56" y="5" width="317" height="34.333333333333336"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
+                                                    <connections>
+                                                        <action selector="textEditingChanged:" destination="50w-8E-6SC" eventType="editingChanged" id="lnL-gf-hVK"/>
+                                                    </connections>
                                                 </textField>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7i9-E3-RAT">
                                                     <rect key="frame" x="20" y="5" width="28" height="34.333333333333336"/>
@@ -123,7 +126,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="3RH-w0-ASS">
-                                                    <rect key="frame" x="20" y="5" width="353" height="216.33333333333334"/>
+                                                    <rect key="frame" x="20" y="5" width="353" height="217"/>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
@@ -181,6 +184,14 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <outlet property="dueDateLabel" destination="Qjb-HQ-aew" id="X8Q-h9-1kO"/>
+                        <outlet property="dueDatePicker" destination="3RH-w0-ASS" id="Wcn-wX-jNS"/>
+                        <outlet property="isCompleteButton" destination="7i9-E3-RAT" id="MU1-pn-QuW"/>
+                        <outlet property="notesTextView" destination="hR8-rN-UfT" id="jnR-1K-rNq"/>
+                        <outlet property="saveButton" destination="FO7-kU-nvb" id="K38-d0-uWg"/>
+                        <outlet property="titleTextField" destination="fyj-sh-MlA" id="9KX-bb-0Bi"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="d64-0L-CJS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="FV1-rV-ZZi" userLabel="Exit" sceneMemberID="exit"/>
