@@ -47,6 +47,31 @@ class ToDoTableViewController: UITableViewController {
     }
     
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
-        //
+        guard segue.identifier == "saveUnwind" else { return }
+        let sourceViewController = segue.source as! ToDoDetailTableViewController
+        if let toDo = sourceViewController.toDo {
+            if let indexOfExistingToDo = toDos.firstIndex(of: toDo) {
+                toDos[indexOfExistingToDo] = toDo
+                tableView.reloadRows(at: [IndexPath(row: indexOfExistingToDo, section: 0)], with: .automatic)
+            } else {
+                let newIndexPath = IndexPath(row: toDos.count, section: 0)
+                toDos.append(toDo)
+                tableView.insertRows(at: [newIndexPath], with: .automatic)
+            }
+        }
+    }
+    
+    @IBSegueAction func editToDo(_ coder: NSCoder, sender: Any?) -> ToDoDetailTableViewController? {
+        let detailController = ToDoDetailTableViewController(coder: coder)
+        guard let cell = sender as? UITableViewCell,
+              let indexPath = tableView.indexPath(for: cell) else {
+                return detailController
+              }
+        
+        tableView.deselectRow(at: indexPath, animated: true)
+        
+        detailController?.toDo = toDos[indexPath.row]
+        
+        return detailController
     }
 }
