@@ -65,6 +65,7 @@
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits"/>
                                                     <connections>
+                                                        <action selector="returnPressed:" destination="50w-8E-6SC" eventType="primaryActionTriggered" id="gl2-g0-A2F"/>
                                                         <action selector="textEditingChanged:" destination="50w-8E-6SC" eventType="editingChanged" id="lnL-gf-hVK"/>
                                                     </connections>
                                                 </textField>
@@ -77,6 +78,9 @@
                                                     <state key="selected" image="checkmark.circle.fill" catalog="system">
                                                         <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
                                                     </state>
+                                                    <connections>
+                                                        <action selector="isCompleteButtonTapped:" destination="50w-8E-6SC" eventType="touchUpInside" id="p8Q-Cn-xgn"/>
+                                                    </connections>
                                                 </button>
                                             </subviews>
                                             <constraints>
@@ -127,6 +131,9 @@
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="3RH-w0-ASS">
                                                     <rect key="frame" x="20" y="5" width="353" height="217"/>
+                                                    <connections>
+                                                        <action selector="datePickerChanged:" destination="50w-8E-6SC" eventType="valueChanged" id="5fP-lf-BhK"/>
+                                                    </connections>
                                                 </datePicker>
                                             </subviews>
                                             <constraints>
