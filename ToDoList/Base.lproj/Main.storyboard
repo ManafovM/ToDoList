@@ -16,14 +16,44 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="EW2-PZ-DUj">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="ToDoCellIdentifier" id="EW2-PZ-DUj" customClass="ToDoCell" customModule="ToDoList" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="50" width="393" height="44.666667938232422"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="EW2-PZ-DUj" id="0gz-Ym-nME">
                                     <rect key="frame" x="0.0" y="0.0" width="393" height="44.666667938232422"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <button opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="252" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gp6-FD-Gi1">
+                                            <rect key="frame" x="20" y="8.6666666666666661" width="28" height="27.333333333333336"/>
+                                            <inset key="imageEdgeInsets" minX="0.0" minY="0.0" maxX="2.2250738585072014e-308" maxY="0.0"/>
+                                            <state key="normal" image="circle" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                            <state key="selected" image="checkmark.circle.fill" catalog="system">
+                                                <preferredSymbolConfiguration key="preferredSymbolConfiguration" configurationType="pointSize" pointSize="24"/>
+                                            </state>
+                                            <connections>
+                                                <action selector="completeButtonTapped:" destination="EW2-PZ-DUj" eventType="touchUpInside" id="oRk-VP-yVe"/>
+                                            </connections>
+                                        </button>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rfy-AI-0Fc">
+                                            <rect key="frame" x="56" y="12" width="297" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                            <nil key="textColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstItem="rfy-AI-0Fc" firstAttribute="leading" secondItem="Gp6-FD-Gi1" secondAttribute="trailing" constant="8" id="IUq-e7-vDs"/>
+                                        <constraint firstItem="Gp6-FD-Gi1" firstAttribute="leading" secondItem="0gz-Ym-nME" secondAttribute="leading" constant="20" id="c9n-Au-Hvz"/>
+                                        <constraint firstAttribute="trailingMargin" secondItem="rfy-AI-0Fc" secondAttribute="trailing" constant="20" id="fcA-kF-bi8"/>
+                                        <constraint firstItem="Gp6-FD-Gi1" firstAttribute="centerY" secondItem="0gz-Ym-nME" secondAttribute="centerY" id="lx0-Ku-ocY"/>
+                                        <constraint firstItem="rfy-AI-0Fc" firstAttribute="centerY" secondItem="0gz-Ym-nME" secondAttribute="centerY" id="qGW-Gb-757"/>
+                                    </constraints>
                                 </tableViewCellContentView>
                                 <connections>
+                                    <outlet property="isCompleteButton" destination="Gp6-FD-Gi1" id="oqb-Zh-S13"/>
+                                    <outlet property="titleLabel" destination="rfy-AI-0Fc" id="DDy-CZ-UCt"/>
                                     <segue destination="tOP-Ps-sdu" kind="presentation" id="tj6-v7-3Qn"/>
                                 </connections>
                             </tableViewCell>
@@ -133,7 +163,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <datePicker contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" datePickerMode="dateAndTime" minuteInterval="1" style="wheels" translatesAutoresizingMaskIntoConstraints="NO" id="3RH-w0-ASS">
-                                                    <rect key="frame" x="20" y="5" width="353" height="217"/>
+                                                    <rect key="frame" x="20" y="5" width="353" height="216.33333333333334"/>
                                                     <connections>
                                                         <action selector="datePickerChanged:" destination="50w-8E-6SC" eventType="valueChanged" id="5fP-lf-BhK"/>
                                                     </connections>
