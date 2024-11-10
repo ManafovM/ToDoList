@@ -7,28 +7,36 @@
 
 import UIKit
 
-class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
+class ToDoTableViewController: UITableViewController, UISearchResultsUpdating, ToDoCellDelegate {
     var toDos = [ToDo]()
+    var filteredToDos = [ToDo]()
+    let searchController = UISearchController()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationItem.searchController = searchController
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchResultsUpdater = self
+        navigationItem.hidesSearchBarWhenScrolling = false
         
         if let savedToDos = ToDo.loadToDos() {
             toDos = savedToDos
         } else {
             toDos = ToDo.loadSampleToDos()
         }
+        filteredToDos = toDos
         
         navigationItem.leftBarButtonItem = editButtonItem
     }
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return toDos.count
+        return filteredToDos.count
     }
 
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
-        let toDo = toDos[indexPath.row]
+        let toDo = filteredToDos[indexPath.row]
         cell.titleLabel.text = toDo.title
         cell.isCompleteButton.isSelected = toDo.isComplete
         cell.delegate = self
@@ -55,6 +63,19 @@ class ToDoTableViewController: UITableViewController, ToDoCellDelegate {
             tableView.reloadRows(at: [indexPath], with: .automatic)
             ToDo.saveToDos(toDos)
         }
+    }
+    
+    func updateSearchResults(for searchController: UISearchController) {
+        if let searchString = searchController.searchBar.text,
+           searchString.isEmpty == false {
+            filteredToDos = toDos.filter({ (toDo) -> Bool in
+                toDo.title.localizedCaseInsensitiveContains(searchString)
+            })
+        } else {
+            filteredToDos = toDos
+        }
+        
+        tableView.reloadData()
     }
     
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
