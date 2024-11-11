@@ -7,10 +7,30 @@
 
 import UIKit
 
+enum Section: CaseIterable {
+    case main
+}
+
 class ToDoTableViewController: UITableViewController, UISearchResultsUpdating, ToDoCellDelegate {
     var toDos = [ToDo]()
     var filteredToDos = [ToDo]()
     let searchController = UISearchController()
+    var dataSource: UITableViewDiffableDataSource<Section, ToDo.ID>!
+    
+    
+    var toDosSnapshot: NSDiffableDataSourceSnapshot<Section, ToDo.ID> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ToDo.ID>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(toDos.map { $0.id })
+        return snapshot
+    }
+    
+    var filteredToDosSnapshot: NSDiffableDataSourceSnapshot<Section, ToDo.ID> {
+        var snapshot = NSDiffableDataSourceSnapshot<Section, ToDo.ID>()
+        snapshot.appendSections([.main])
+        snapshot.appendItems(filteredToDos.map { $0.id })
+        return snapshot
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -28,19 +48,8 @@ class ToDoTableViewController: UITableViewController, UISearchResultsUpdating, T
         filteredToDos = toDos
         
         navigationItem.leftBarButtonItem = editButtonItem
-    }
-
-    override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return filteredToDos.count
-    }
-
-    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
-        let toDo = filteredToDos[indexPath.row]
-        cell.titleLabel.text = toDo.title
-        cell.isCompleteButton.isSelected = toDo.isComplete
-        cell.delegate = self
-        return cell
+        
+        createDataSource()
     }
 
     override func tableView(_ tableView: UITableView, canEditRowAt indexPath: IndexPath) -> Bool {
@@ -75,7 +84,24 @@ class ToDoTableViewController: UITableViewController, UISearchResultsUpdating, T
             filteredToDos = toDos
         }
         
-        tableView.reloadData()
+        dataSource.apply(filteredToDosSnapshot, animatingDifferences: true)
+        print(toDos)
+    }
+    
+    func createDataSource() {
+        dataSource = UITableViewDiffableDataSource(tableView: tableView, cellProvider: { [weak self] tableView, indexPath, itemIdentifier in
+            guard let self, let toDo = toDos.first(where: { $0.id == itemIdentifier })
+            else {
+                return nil
+            }
+            
+            let cell = tableView.dequeueReusableCell(withIdentifier: "ToDoCellIdentifier", for: indexPath) as! ToDoCell
+            cell.titleLabel.text = toDo.title
+            cell.isCompleteButton.isSelected = toDo.isComplete
+            cell.delegate = self
+            return cell
+        })
+        dataSource.apply(toDosSnapshot)
     }
     
     @IBAction func unwindToToDoList(segue: UIStoryboardSegue) {
