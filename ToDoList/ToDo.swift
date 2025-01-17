@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct ToDo: Equatable, Codable {
+struct ToDo: Equatable, Codable, Identifiable {
     let id: UUID
     var title: String
     var isComplete: Bool
